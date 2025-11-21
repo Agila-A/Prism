@@ -1,0 +1,12 @@
+[
+  {"text": "what is my account balance", "label": "check_balance"},
+  {"text": "check my balance", "label": "check_balance"},
+  {"text": "how much money do I have", "label": "check_balance"},
+  {"text": "send 500 rupees to harish", "label": "send_money"},
+  {"text": "transfer 200 to gokul", "label": "send_money"},
+  {"text": "pay my electricity bill", "label": "pay_bill"},
+  {"text": "show my last 5 transactions", "label": "transactions_history"},
+  {"text": "open credit card section", "label": "open_credit_card"},
+  {"text": "where is nearest atm", "label": "find_branch_atm"},
+  {"text": "pay 1500 to shruthi", "label": "send_money"}
+]

@@ -2,40 +2,44 @@
 
 # dependencies
 node_modules/
+Include/
+Lib/
+Scripts/
+share/
 venv/
-# Expo
-.expo/
+
+uploads/
+
+output_audio/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+.env/
+env/
+.venv/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Distribution / packaging
+build/
 dist/
-web-build/
-expo-env.d.ts
+*.egg-info/
 
-# Native
-.kotlin/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
+# Logs
+*.log
 
-# Metro
-.metro-health-check*
-
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
-# macOS
+# OS files
 .DS_Store
-*.pem
+Thumbs.db
 
-# local env files
-.env*.local
 
-# typescript
-*.tsbuildinfo
 
-# generated native folders
-/ios
-/android
+backend/ai/venv/

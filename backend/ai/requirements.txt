@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+joblib
+scikit-learn
+numpy
+pyttsx3
+whisper @ git+https://github.com/openai/whisper.git   # optional, or pip openai-whisper if available
+soundfile
+aiofiles
