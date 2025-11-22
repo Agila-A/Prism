@@ -85,7 +85,7 @@ export function Profile({ onNavigate }) {
         })}
 
         {/* Logout */}
-        <TouchableOpacity style={styles.logoutButton}>
+        <TouchableOpacity style={styles.logoutButton} onPress={() => onNavigate('user-login')}>
           <LogOut color="#dc2626" size={20} />
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
