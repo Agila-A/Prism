@@ -9,7 +9,7 @@ def stt_with_openai_whisper(filepath: str, openai_api_key: str) -> str:
     # This uses the OpenAI whisper API via requests to upload file.
     # You must `pip install openai` and set env OPENAI_API_KEY
     import openai
-    openai.api_key = 
+
     with open(filepath, "rb") as f:
         resp = openai.Audio.transcribe("gpt-4o-transcribe", f)  # example - adjust per latest API
     # resp may contain 'text' or 'transcript' depending on SDK; adapt as needed
