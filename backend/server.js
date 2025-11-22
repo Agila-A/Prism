@@ -1,25 +1,29 @@
-// server.js
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+const db = require('./models');
+
 const app = express();
-const PORT = 5000; // Choose a port
+const PORT = 5000;
 
-// --- Middleware ---
-// Enable CORS for all routes
 app.use(cors());
-
-// Parse incoming request bodies
 app.use(bodyParser.json());
 
 app.get('/check', (req, res) => {
-   res.send("Backend is Working!!!...")
+  res.send("Backend is Working!!!...");
 });
 
+db.sequelize.authenticate()
+  .then(() => console.log("DB Connected ✔️"))
+  .catch(err => console.log("DB Connection Failed ❌", err));
 
-// --- Start Server ---
+db.sequelize.sync()
+  .then(() => console.log("Models Synced ✔️"))
+  .catch(err => console.log("Sync Error ❌", err));
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-    console.log(`Access at: http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
