@@ -1,78 +1,51 @@
-import React from 'react';
+// LoanApplication.jsx
+
+import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft, HelpCircle, CheckCircle, XCircle, Clock } from 'lucide-react-native';
+// Import the flow manager
+import { LoanFlowManager } from './LoanFlowManager'; 
 
 export function LoanApplication({ onNavigate }) {
+  // State to control which screen is visible: 'history' or 'new_loan_flow'
+  const [currentView, setCurrentView] = useState('history'); 
+
   const loanApplications = [
-    {
-      id: 1,
-      type: 'Personal Loan',
-      amount: '$15,000',
-      status: 'rejected',
-      date: 'Nov 15, 2025',
-      reason: 'Low credit score and inconsistent income',
-    },
-    {
-      id: 2,
-      type: 'Auto Loan',
-      amount: '$28,000',
-      status: 'pending',
-      date: 'Nov 14, 2025',
-      reason: 'Under review - Decision expected within 48 hours',
-    },
-    {
-      id: 3,
-      type: 'Home Loan',
-      amount: '$250,000',
-      status: 'approved',
-      date: 'Oct 28, 2025',
-      reason: 'Congratulations! Your loan has been approved',
-    },
+    { id: 1, type: 'Personal Loan', amount: '$15,000', status: 'rejected', date: 'Nov 15, 2025', reason: 'Low credit score and inconsistent income' },
+    { id: 2, type: 'Auto Loan', amount: '$28,000', status: 'pending', date: 'Nov 14, 2025', reason: 'Under review - Decision expected within 48 hours' },
+    { id: 3, type: 'Home Loan', amount: '$250,000', status: 'approved', date: 'Oct 28, 2025', reason: 'Congratulations! Your loan has been approved' },
   ];
 
   const getStatusIcon = (status) => {
     switch (status) {
-      case 'approved':
-        return <CheckCircle color="#22c55e" size={24} />;
-      case 'rejected':
-        return <XCircle color="#ef4444" size={24} />;
-      case 'pending':
-        return <Clock color="#f97316" size={24} />;
-      default:
-        return <HelpCircle color="#60a5fa" size={24} />;
+      case 'approved': return <CheckCircle color="#22c55e" size={24} />;
+      case 'rejected': return <XCircle color="#ef4444" size={24} />;
+      case 'pending': return <Clock color="#f97316" size={24} />;
+      default: return <HelpCircle color="#60a5fa" size={24} />;
     }
   };
 
   const getStatusColors = (status) => {
     switch (status) {
-      case 'approved':
-        return ['#4ade80', '#22c55e'];
-      case 'rejected':
-        return ['#f87171', '#ef4444'];
-      case 'pending':
-        return ['#fb923c', '#f59e0b'];
-      default:
-        return ['#60a5fa', '#3b82f6'];
+      case 'approved': return ['#4ade80', '#22c55e'];
+      case 'rejected': return ['#f87171', '#ef4444'];
+      case 'pending': return ['#fb923c', '#f59e0b'];
+      default: return ['#60a5fa', '#3b82f6'];
     }
   };
 
   const getStatusBg = (status) => {
     switch (status) {
-      case 'approved':
-        return { backgroundColor: '#dcfce7', borderColor: '#bbf7d0', textColor: '#166534' };
-      case 'rejected':
-        return { backgroundColor: '#fee2e2', borderColor: '#fecaca', textColor: '#991b1b' };
-      case 'pending':
-        return { backgroundColor: '#fed7aa', borderColor: '#fdba74', textColor: '#9a3412' };
-      default:
-        return { backgroundColor: '#dbeafe', borderColor: '#bfdbfe', textColor: '#1e40af' };
+      case 'approved': return { backgroundColor: '#dcfce7', borderColor: '#bbf7d0', textColor: '#166534' };
+      case 'rejected': return { backgroundColor: '#fee2e2', borderColor: '#fecaca', textColor: '#991b1b' };
+      case 'pending': return { backgroundColor: '#fed7aa', borderColor: '#fdba74', textColor: '#9a3412' };
+      default: return { backgroundColor: '#dbeafe', borderColor: '#bfdbfe', textColor: '#1e40af' };
     }
   };
 
-  return (
-    <View style={styles.container}>
-      {/* Header */}
+  const renderLoanHistory = () => (
+    <>
       <LinearGradient colors={['#eff6ff', '#f0f9ff']} style={styles.header}>
         <View style={styles.headerTop}>
           <TouchableOpacity onPress={() => onNavigate('home')} style={styles.backButton}>
@@ -84,8 +57,11 @@ export function LoanApplication({ onNavigate }) {
           </View>
         </View>
 
-        {/* Apply for New Loan */}
-        <TouchableOpacity style={styles.applyButton}>
+        {/* --- APPLY FOR NEW LOAN BUTTON (MODIFIED) --- */}
+        <TouchableOpacity 
+          style={styles.applyButton} 
+          onPress={() => setCurrentView('new_loan_flow')} // <--- NAVIGATES to the 4-step form
+        >
           <LinearGradient colors={['#fb923c', '#f97316']} style={styles.applyButtonGradient}>
             <Text style={styles.applyButtonTitle}>Apply for New Loan</Text>
             <Text style={styles.applyButtonSubtitle}>Get instant pre-approval decision</Text>
@@ -167,9 +143,22 @@ export function LoanApplication({ onNavigate }) {
           </TouchableOpacity>
         </LinearGradient>
 
-
         <View style={{ height: 120 }} />
       </ScrollView>
+    </>
+  );
+
+  // --- Main Render Logic ---
+  return (
+    <View style={styles.container}>
+      {currentView === 'history' ? (
+        renderLoanHistory()
+      ) : (
+        <LoanFlowManager 
+          onFlowComplete={() => setCurrentView('history')}
+          onBackToHistory={() => setCurrentView('history')}
+        />
+      )}
     </View>
   );
 }
