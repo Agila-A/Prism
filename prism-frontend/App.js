@@ -13,6 +13,7 @@ import { AddBeneficiary}  from './components/AddBeneficiary';
 import { Profile } from './components/Profile';
 import  {Notifications}  from './components/Notifications';
 import { BottomNav } from './components/BottomNav';
+import {View} from 'react-native';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('home');

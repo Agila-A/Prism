@@ -1,0 +1,23 @@
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+joblib
+pandas
+numpy
+scikit-learn
+xgboost
+shap
+soundfile
+pydub
+requests
+aiofiles
+python-dotenv
+# STT providers (pick one or more)
+openai               # if you use OpenAI Whisper API
+vosk                # optional local STT (pip install vosk)
+faster-whisper      # optional (pip install faster-whisper)
+# TTS
+pyttsx3
+gTTS
+playsound==1.2.2

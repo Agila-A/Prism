@@ -138,11 +138,16 @@ export function Home({ onNavigate }) {
 
 const styles = StyleSheet.create({
   container: {
+    
     flex: 1,
     backgroundColor: '#f8fafc',
+    
+
   },
   scrollView: {
     flex: 1,
+  
+
   },
   header: {
     paddingHorizontal: 24,

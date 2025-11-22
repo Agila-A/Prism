@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, TextInput, StyleSheet, Animated } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Mic, X, Clock, Send } from 'lucide-react-native';
+import { Audio } from 'expo-av';
+import * as FileSystem from 'expo-file-system';
+
 
 export function VoiceAssistantHome({ onNavigate }) {
+
+  // ----------------------------------
+  // STATE VARIABLES
+  // ----------------------------------
   const [isListening, setIsListening] = useState(false);
+  const [recording, setRecording] = useState(null);
   const [messages, setMessages] = useState([
     { id: 1, type: 'assistant', text: 'Hi Sarah! How can I help you with your banking today?' },
   ]);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [typedMessage, setTypedMessage] = useState("");
 
+  // ----------------------------------
+  // QUICK SUGGESTIONS
+  // ----------------------------------
   const suggestions = [
     'Pay my credit card bill',
     'Check balance',
@@ -18,15 +31,154 @@ export function VoiceAssistantHome({ onNavigate }) {
     'Block my card',
   ];
 
-  const handleSuggestionClick = (suggestion) => {
-    setMessages([...messages, 
-      { id: messages.length + 1, type: 'user', text: suggestion },
-      { id: messages.length + 2, type: 'assistant', text: `Processing: "${suggestion}"...` }
+  const handleSuggestionClick = async (suggestion) => {
+    setMessages(prev => [
+      ...prev,
+      { id: prev.length + 1, type: 'user', text: suggestion },
+      { id: prev.length + 2, type: 'assistant', text: `Processing: "${suggestion}"...` }
     ]);
+
+    // Optional: You can call backend text endpoint here
   };
+
+  // ----------------------------------
+  // START RECORDING
+  // ----------------------------------
+  const startRecording = async () => {
+  try {
+    console.log("Starting audio recording...");
+
+    const permission = await Audio.requestPermissionsAsync();
+    if (!permission.granted) {
+      alert("Microphone permission not granted");
+      return;
+    }
+
+   
+
+    const { recording } = await Audio.Recording.createAsync({
+      android: {
+        extension: '.m4a',
+        outputFormat: Audio.AndroidOutputFormat.MPEG_4,
+        audioEncoder: Audio.AndroidAudioEncoder.AAC,
+        sampleRate: 44100,
+        numberOfChannels: 1,
+        bitRate: 128000
+      },
+      ios: Audio.RecordingOptionsPresets.HIGH_QUALITY.ios,
+    });
+
+    setRecording(recording);
+    setIsListening(true);
+
+  } catch (error) {
+    console.error("Recording start error:", error);
+  }
+};
+
+  // ----------------------------------
+  // STOP RECORDING + SEND TO BACKEND
+  // ----------------------------------
+  const stopRecording = async () => {
+    try {
+      console.log("Stopping audio recording...");
+      await recording.stopAndUnloadAsync();
+
+      const audioUri = recording.getURI();
+      setRecording(null);
+      setIsListening(false);
+      setIsProcessing(true);
+
+      const formData = new FormData();
+      formData.append("audio", {
+        uri: audioUri,
+        name: "speech.m4a",
+        type: "audio/m4a"
+      });
+
+      const response = await fetch("http://192.168.0.2:8000/api/voice", {
+        method: "POST",
+        body: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      const data = await response.json();
+
+      // USER TEXT
+      setMessages(prev => [
+        ...prev,
+        { id: prev.length + 1, type: 'user', text: data.user_text }
+      ]);
+
+      // BOT TEXT
+      setMessages(prev => [
+        ...prev,
+        { id: prev.length + 2, type: 'assistant', text: data.bot_text }
+      ]);
+
+      // PLAY AUDIO
+      const sound = new Audio.Sound();
+      await sound.loadAsync({ uri: data.tts_audio_url });
+      await sound.playAsync();
+
+    } catch (error) {
+      console.error("Error processing audio:", error);
+    }
+
+    setIsProcessing(false);
+  };
+
+  // ----------------------------------
+  // TEXT MESSAGE SEND
+  // ----------------------------------
+  const sendTypedMessage = async () => {
+    if (!typedMessage.trim()) return;
+
+    const userText = typedMessage;
+    setTypedMessage("");
+
+    // Update chat visually
+    setMessages(prev => [
+      ...prev,
+      { id: prev.length + 1, type: "user", text: userText },
+      { id: prev.length + 2, type: "assistant", text: "Processing…" }
+    ]);
+
+    // Send text to backend (optional)
+    try {
+      const res = await fetch("http://192.168.0.2:8000/api/text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: userText }),
+      });
+
+      const data = await res.json();
+
+      // Update assistant message
+      setMessages(prev => [
+        ...prev,
+        { id: prev.length + 3, type: 'assistant', text: data.bot_text }
+      ]);
+
+      // Play TTS
+      if (data.tts_audio_url) {
+        const sound = new Audio.Sound();
+        await sound.loadAsync({ uri: data.tts_audio_url });
+        await sound.playAsync();
+      }
+
+    } catch (err) {
+      console.error("Text backend error:", err);
+    }
+  };
+
+  // ----------------------------------
+  // UI BELOW (UNTOUCHED)
+  // ----------------------------------
 
   return (
     <LinearGradient colors={['#dbeafe', '#e0e7ff', '#ede9fe']} style={styles.container}>
+
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -88,6 +240,7 @@ export function VoiceAssistantHome({ onNavigate }) {
 
       {/* Voice Input Area */}
       <View style={styles.inputArea}>
+
         {/* Soundwave Animation */}
         {isListening && (
           <View style={styles.soundwave}>
@@ -99,7 +252,12 @@ export function VoiceAssistantHome({ onNavigate }) {
 
         {/* Microphone Button */}
         <View style={styles.micContainer}>
-          <TouchableOpacity onPress={() => setIsListening(!isListening)}>
+          <TouchableOpacity
+            onPress={() => {
+              if (isListening) stopRecording();
+              else startRecording();
+            }}
+          >
             <LinearGradient 
               colors={isListening ? ['#f87171', '#ef4444'] : ['#fb923c', '#f97316']} 
               style={styles.micButton}
@@ -119,18 +277,24 @@ export function VoiceAssistantHome({ onNavigate }) {
             placeholder="Or type your request..."
             placeholderTextColor="#94a3b8"
             style={styles.textInput}
+            value={typedMessage}
+            onChangeText={setTypedMessage}
           />
-          <TouchableOpacity style={styles.sendButton}>
+          <TouchableOpacity onPress={sendTypedMessage} style={styles.sendButton}>
             <LinearGradient colors={['#fb923c', '#f97316']} style={styles.sendButtonGradient}>
               <Send color="#fff" size={16} />
             </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>
+
     </LinearGradient>
   );
 }
 
+// ------------------------------------------------------------
+//  STYLES (UNCHANGED ENTIRELY, COPIED FROM ORIGINAL FILE)
+// ------------------------------------------------------------
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -315,3 +479,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
