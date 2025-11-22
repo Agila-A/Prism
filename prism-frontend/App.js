@@ -13,12 +13,24 @@ import { AddBeneficiary}  from './components/AddBeneficiary';
 import { Profile } from './components/Profile';
 import  {Notifications}  from './components/Notifications';
 import { BottomNav } from './components/BottomNav';
+import { UserLoginScreen } from './components/UserLoginScreen';
+import { AdminLoginScreen } from './components/AdminLoginScreen';
+import { AdminDashboardScreen } from './components/AdminDashboardScreen';
+import { SelectRoleScreen } from './components/SelectRoleScreen';
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('home');
+  const [currentScreen, setCurrentScreen] = useState('select-role');
 
   const renderScreen = () => {
     switch (currentScreen) {
+      case 'select-role':
+        return <SelectRoleScreen onNavigate={setCurrentScreen} />;
+      case 'user-login':
+        return <UserLoginScreen onNavigate={setCurrentScreen} />;
+      case 'admin-login':
+        return <AdminLoginScreen onNavigate={setCurrentScreen} />;
+      case 'admin-dash':
+        return <AdminDashboardScreen onNavigate={setCurrentScreen} />;
       case 'home':
         return <Home onNavigate={setCurrentScreen} />;
       case 'voice-assistant':
@@ -52,7 +64,7 @@ export default function App() {
     <>
       <StatusBar barStyle="light-content" backgroundColor="#3730a3" />
       {renderScreen()}
-      {currentScreen !== 'voice-assistant' && currentScreen !== 'governance' && (
+      {currentScreen !== 'voice-assistant' && currentScreen !== 'governance' && currentScreen !== 'select-role' && currentScreen !== 'user-login' && currentScreen !== 'admin-dash' &&(
         <BottomNav currentScreen={currentScreen} onNavigate={setCurrentScreen} />
       )}
     </>
