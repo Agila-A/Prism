@@ -9,7 +9,9 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-picker/picker": "2.11.1",
     "expo": "~54.0.23",
+    "expo-document-picker": "~14.0.7",
     "expo-linear-gradient": "^15.0.7",
     "expo-status-bar": "~3.0.8",
     "lucide-react-native": "^0.553.0",
