@@ -68,18 +68,23 @@ html
 
 
 <h2>🖼 Screenshots</h2>
-<img src="prism-frontend/assets/img1.jpg" width="300" />
-<img src="prism-frontend/assets/img2.jpg" width="300" />
-<img src="prism-frontend/assets/img3.jpg" width="300" />
-<img src="prism-frontend/assets/img4.jpg" width="300" />
-<img src="prism-frontend/assets/img5.jpg" width="300" />
-<img src="prism-frontend/assets/img6.jpg" width="300" />
-<img src="prism-frontend/assets/img7.jpg" width="300" />
-<img src="prism-frontend/assets/img8.jpg" width="300" />
-<img src="prism-frontend/assets/img9.jpg" width="300" />
-<img src="prism-frontend/assets/img10.jpg" width="300" />
-<img src="prism-frontend/assets/img11.jpg" width="300" />
-<img src="prism-frontend/assets/img12.jpg" width="300" />
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+  <img src="prism-frontend/assets/img1.jpg" width="280" />
+  <img src="prism-frontend/assets/img2.jpg" width="280" />
+  <img src="prism-frontend/assets/img3.jpg" width="280" />
+  <img src="prism-frontend/assets/img4.jpg" width="280" />
+  <img src="prism-frontend/assets/img5.jpg" width="280" />
+  <img src="prism-frontend/assets/img6.jpg" width="280" />
+
+  <img src="prism-frontend/assets/img7.jpg" width="280" />
+  <img src="prism-frontend/assets/img8.jpg" width="280" />
+  <img src="prism-frontend/assets/img9.jpg" width="280" />
+  <img src="prism-frontend/assets/img10.jpg" width="280" />
+  <img src="prism-frontend/assets/img11.jpg" width="280" />
+  <img src="prism-frontend/assets/img12.jpg" width="280" />
+</div>
+
 
 <hr/>
 
