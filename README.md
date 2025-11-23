@@ -3,7 +3,7 @@
 <h3 align="center">The AI Assistant That Finally Explains Itself — Transparent, Bias-Free, Ethical Banking</h3>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&duration=3000&pause=1000&color=61F7E3&center=true&vCenter=true&width=760&lines=%22When+a+machine+decides+your+future+in+seconds%2C+shouldn't+it+at+least+tell+you+why%3F%22;Voice-First+%7C+Explainable+%7C+Bias-Free;99%2B+Languages+%7C+SHAP+Explainability" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&duration=3000&pause=1000&color=61F7E3&center=true&vCenter=true&width=760&lines=%22When+a+machine+decides+your+future+in+seconds%2C+shouldn't+it+at+least+tell+you+why%3F%22;Voice-First+%7C+Explainable+%7C+Bias-Free;5%2B+Languages+%7C+SHAP+Explainability" />
 </p>
 
 <hr/>
