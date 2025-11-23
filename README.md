@@ -1,44 +1,90 @@
-# 🌈 PRISM – AI-Powered Loan Portal
+html
+<h1 align="center">🔮 Prism</h1>
+<h3 align="center">The AI Assistant That Finally Explains Itself — Transparent, Bias-Free, Ethical Banking</h3>
 
-PRISM is a transparent, friendly and intelligent loan-assistance platform that helps users understand why their loan was approved or rejected — and what they can do next.
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&duration=3000&pause=1000&color=61F7E3&center=true&vCenter=true&width=760&lines=%22When+a+machine+decides+your+future+in+seconds%2C+shouldn't+it+at+least+tell+you+why%3F%22;Voice-First+%7C+Explainable+%7C+Bias-Free;99%2B+Languages+%7C+SHAP+Explainability" />
+</p>
 
-It combines:
+<hr/>
 
-- 🧠 Machine Learning (XGBoost)
-- ⚡ FastAPI backend
-- 🤖 Groq LLM explanations
-- 📱 React Native (Expo) frontend
+<h2>🎯 The Problem</h2>
+<p>Banking AI makes life-changing decisions but rarely explains <i>why</i>. Customers face:</p>
+<ul>
+  <li>Silent rejections with no explanation</li>
+  <li>Hidden bias against women, elderly & minorities</li>
+  <li>Language barriers for non-English speakers</li>
+  <li>No control over data usage</li>
+  <li>No transparency in automated processes</li>
+</ul>
+<p><b>Impact:</b> 72% of rejected borrowers never reapply; nearly half switch banks after unfair AI decisions.</p>
 
----
+<hr/>
 
-## ✨ Features
+<h2>💡 Our Solution</h2>
+<p>Prism is a <b>voice-powered, bias-free AI assistant</b> that explains every banking decision.</p>
+<ul>
+  <li>🎤 99+ languages — ask anything naturally</li>
+  <li>🔍 Clear “why” behind decisions</li>
+  <li>🔒 Full data ownership and transparency</li>
+</ul>
 
-- ✔️ Multi-step loan application flow
-- ✔️ Real-time eligibility prediction using ML  
-- ✔️ Human-friendly explanations generated using SHAP logic  
-- ✔️ AI follow-up chat powered by Groq Llama-3  
-- ✔️ Clean UI with a friendly assistant (Prism AI)  
-- ✔️ Admin login for internal access  
-- ✔️ Mobile-ready React Native UI  
-- ✔️ Fast, scalable API architecture (FastAPI)
+<hr/>
 
----
+<h2>👥 Who We Serve</h2>
+<ul>
+  <li>✅ Women Entrepreneurs — fair access</li>
+  <li>✅ Elderly Users — native-language banking</li>
+  <li>✅ Underserved Communities — financial inclusion</li>
+  <li>✅ Ethical Banks — transparency & trust</li>
+</ul>
 
-## 📸 Screenshots
+<hr/>
+
+<h2>✨ Key Features</h2>
+<ul>
+  <li>🔍 <b>Visual Explainability</b> — SHAP dashboards showing decision factors</li>
+  <li>⚖ <b>Bias-Free AI</b> — no gender/age/state/nationality inputs</li>
+  <li>🎤 <b>Multilingual Voice Interface</b> — powered by Whisper</li>
+  <li>🚨 <b>Real-Time Alerts</b> — fraud, unusual activity</li>
+  <li>🔒 <b>Granular Data Control</b> — toggle + delete anytime</li>
+  <li>🤖 <b>AI Chatbot Assistant</b> — answers and adjusts permissions</li>
+  <li>📊 <b>Dual Audit Logs</b> — customer + regulator views</li>
+  <li>🔄 <b>Continuous Learning</b> — fairness improves daily</li>
+</ul>
+
+<hr/>
+
+<h2>🛠 Tech Stack</h2>
+<ul>
+  <li>🧠 XGBoost + SHAP — explainable ML</li>
+  <li>🤖 Groq LLM — conversational banking assistant</li>
+  <li>🎤 Whisper AI — 99+ language voice recognition</li>
+  <li>⚛ React Native — cross-platform UI</li>
+  <li>🟢 Node.js + Express — secure backend</li>
+  <li>🐘 PostgreSQL — bank-grade data storage</li>
+</ul>
+
+<hr/>
+
+<hr/>
 
 
 
----
+<hr/>
 
-## 🚀 How to Run PRISM (Full Application)
 
-PRISM consists of **3 parts**:
-python-ml-api/ → ML model + Explainability + Groq LLM
-backend/ → Postgre + MongoDB for storage
-prism-app/ → React Native App (Expo)
 
----
+<h2>🖼 Screenshots</h2>
+<p>Add your prototype images here.</p>
 
-## 🔐 Admin Login 
-Email: admin@example.com
-Password: 12345678
+<hr/>
+
+<h2>📫 Contact</h2>
+<p>Team Prism<br/>
+📧 your-email@example.com<br/>
+🌐 your-website.com</p>
+
+
+
+ithu crt ha nu paaru
