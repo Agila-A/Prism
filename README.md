@@ -68,7 +68,7 @@ html
 
 
 <h2>🖼 Screenshots</h2>
-<p>Add your prototype images here.</p>
+<img src="prism-frontend/assets/img1.jpg" width="300" />
 
 <hr/>
 
