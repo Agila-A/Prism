@@ -24,7 +24,7 @@
 <h2>💡 Our Solution</h2>
 <p>Prism is a <b>voice-powered, bias-free AI assistant</b> that explains every banking decision.</p>
 <ul>
-  <li>🎤 99+ languages — ask anything naturally</li>
+  <li>🎤 5+ languages — ask anything naturally</li>
   <li>🔍 Clear “why” behind decisions</li>
   <li>🔒 Full data ownership and transparency</li>
 </ul>
