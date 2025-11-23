@@ -7,6 +7,30 @@ export function AdminLoginScreen({ onNavigate }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleLogin = async () => {
+    setError(''); // reset error
+    try {
+      const response = await fetch('http://localhost:5000/api/admin/login', {  // backend URL
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', },
+        body: JSON.stringify({ email,password })
+      });
+    
+      const data = await response.json();
+
+      if (response.ok) {
+        // Login success
+        onNavigate('admin-dash'); // navigate to dashboard
+      } else {
+        // Login failed
+        setError(data.message || 'Login failed');
+      }
+    } catch (err) {
+      setError('Server error. Please try again later.');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -84,10 +108,14 @@ export function AdminLoginScreen({ onNavigate }) {
           <TouchableOpacity style={styles.forgotPasswordContainer}>
             <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
           </TouchableOpacity>
-
+        {error ? (
+            <Text style={{ color: 'red', marginBottom: 12, textAlign: 'center' }}>
+              {error}
+            </Text>
+          ) : null}
           {/* Login Button */}
-          <TouchableOpacity 
-            onPress={() => onNavigate('admin-dash')}
+           <TouchableOpacity 
+            onPress={handleLogin}
             style={styles.loginButton}
           >
             <LinearGradient colors={['#818cf8', '#6366f1']} style={styles.loginButtonGradient}>

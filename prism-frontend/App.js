@@ -64,7 +64,7 @@ export default function App() {
     <>
       <StatusBar barStyle="light-content" backgroundColor="#3730a3" />
       {renderScreen()}
-      {currentScreen !== 'voice-assistant' && currentScreen !== 'governance' && currentScreen !== 'select-role' && currentScreen !== 'user-login' && currentScreen !== 'admin-dash' &&(
+      {currentScreen !== 'voice-assistant' && currentScreen !== 'governance' && currentScreen !== 'select-role' && currentScreen !== 'user-login' && currentScreen !== 'admin-dash' && currentScreen !== 'admin-login' &&(
         <BottomNav currentScreen={currentScreen} onNavigate={setCurrentScreen} />
       )}
     </>
