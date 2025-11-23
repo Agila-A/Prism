@@ -8,7 +8,10 @@ const env = "development";
 const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
-let sequelize = new Sequelize(config.database, config.username, config.password, config);
+let sequelize = new Sequelize(config.database, config.username, config.password,{
+    ...config,
+    logging: false // <-- Turn off all SQL logs
+  });
 
 fs
   .readdirSync(__dirname)
