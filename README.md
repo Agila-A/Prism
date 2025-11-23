@@ -90,7 +90,7 @@
 
 <h2>📫 Contact</h2>
 <p>Team Prism<br/>
-  📧 230213.it@rmkec.ac.in<br/>
+  📧 harirajan10192005@gmail.com<br/>
   📧 deepikaanandhan2@gmail.com<br/>
   📧 a.agila2005@gmail.com<br/>
   📧 dhaneshprabhupro@gmail.com<br/>
