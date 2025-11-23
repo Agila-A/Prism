@@ -86,7 +86,7 @@ export function UserLoginScreen({ onNavigate }) {
           </TouchableOpacity>
 
           {/* Login Button */}
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity style={styles.loginButton} onPress={() => onNavigate('home')}>
             <LinearGradient colors={['#fb923c', '#f97316']} style={styles.loginButtonGradient}>
               <Text style={styles.loginButtonText}>Login</Text>
             </LinearGradient>

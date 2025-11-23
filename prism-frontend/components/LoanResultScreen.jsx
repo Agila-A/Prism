@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-nati
 import { LinearGradient } from "expo-linear-gradient";
 import { CheckCircle, XCircle, HelpCircle, ArrowLeft } from "lucide-react-native";
 
-export function LoanResultScreen({ result, onBack }) {
+export function LoanResultScreen({ result, onBack, onAskAI }) {  
   const isApproved = result.decision === "Approved";
 
   return (
@@ -45,22 +45,25 @@ export function LoanResultScreen({ result, onBack }) {
           ))}
         </View>
 
-        {/* BUTTONS */}
-        <TouchableOpacity style={styles.askButton}>
+        {/* ASK AI BUTTON */}
+        <TouchableOpacity
+          style={styles.askButton}
+          onPress={() => onAskAI(result)}   // <- 🔥 passes result payload
+        >
           <HelpCircle size={20} color="#fff" />
           <Text style={styles.askText}>Ask AI Why?</Text>
         </TouchableOpacity>
 
+        {/* BACK */}
         <TouchableOpacity onPress={onBack} style={styles.backHomeButton}>
           <Text style={styles.backHomeText}>Back to Loan History</Text>
         </TouchableOpacity>
-
-        
 
       </ScrollView>
     </LinearGradient>
   );
 }
+
 
 const styles = StyleSheet.create({
   gradient: {

@@ -8,6 +8,7 @@ import { FinancialScreen } from './FinancialScreen';
 import { LoanDetailsScreen } from './LoanDetailsScreen';
 import { DocumentScreen } from './DocumentScreen';
 import { LoanResultScreen } from './LoanResultScreen';
+import { AskPrismChat } from './AskPrismChat';   // ⭐ ADD THIS IMPORT
 
 const MAX_STEPS = 4;
 
@@ -24,20 +25,25 @@ export function LoanFlowManager({ onFlowComplete, onBackToHistory }) {
     default_history: "",
   });
 
-  // ⭐ For showing final result screen
+  // ⭐ Final model result
   const [resultData, setResultData] = useState(null);
   const [showResult, setShowResult] = useState(false);
 
-  // ⭐ Merge updates from screens
+  // ⭐ Ask Prism AI Chat
+  const [showChat, setShowChat] = useState(false);
+  const [chatPayload, setChatPayload] = useState(null);
+
+  // ⭐ Merge new updates
   const updateFormData = (newData) => {
     setFormData(prev => ({ ...prev, ...newData }));
   };
 
-  const handleNext = () => {
-    setCurrentStep(prev => Math.min(prev + 1, MAX_STEPS));
-  };
-
+  const handleNext = () => setCurrentStep(prev => Math.min(prev + 1, MAX_STEPS));
   const handleBack = () => {
+    if (showChat) {
+      setShowChat(false);
+      return;
+    }
     if (showResult) {
       setShowResult(false);
       return;
@@ -45,72 +51,90 @@ export function LoanFlowManager({ onFlowComplete, onBackToHistory }) {
     setCurrentStep(prev => Math.max(prev - 1, 1));
   };
 
-  // ⭐ Final submit → send to Python backend
+  // ⭐ Final Submit
   const handleSubmit = async () => {
-  try {
-    // FIRST validate
-    if (
-      !formData.age ||
-      !formData.salary ||
-      !formData.credit_score ||
-      !formData.existing_emi ||
-      !formData.loan_amount ||
-      !formData.default_history
-    ) {
-      Alert.alert("Missing Fields", "Please fill out all required fields.");
-      return;
+    try {
+      if (
+        !formData.age ||
+        !formData.salary ||
+        !formData.credit_score ||
+        !formData.existing_emi ||
+        !formData.loan_amount ||
+        !formData.default_history
+      ) {
+        Alert.alert("Missing Fields", "Please fill out all required fields.");
+        return;
+      }
+
+      const payload = {
+        age: Number(formData.age),
+        salary: Number(formData.salary) * 12,
+        credit_score: Number(formData.credit_score),
+        existing_emi: Number(formData.existing_emi),
+        loan_amount: Number(formData.loan_amount),
+        default_history: formData.default_history === "yes" ? 1 : 0,
+      };
+
+      console.log("📤 Sending payload:", payload);
+
+      const response = await fetch("http://192.168.29.112:8000/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+      console.log("📥 Response:", result);
+
+      if (!response.ok) {
+        Alert.alert("Backend Error", JSON.stringify(result, null, 2));
+        return;
+      }
+
+      setResultData(result);
+      setShowResult(true);
+
+    } catch (error) {
+      console.log("❌ ERROR:", error);
+      Alert.alert("Network Error", "Cannot reach Python backend.");
     }
-
-    // SAFE PAYLOAD (prevents NaN & empty values)
-    const payload = {
-      age: Number(formData.age) || 0,
-      salary: (Number(formData.salary) * 12) || 0,  // monthly → yearly
-      credit_score: Number(formData.credit_score) || 0,
-      existing_emi: Number(formData.existing_emi) || 0,
-      loan_amount: Number(formData.loan_amount) || 0,
-      default_history: formData.default_history === "yes" ? 1 : 0,
-    };
-
-    console.log("📤 Sending payload:", payload);
-
-    const response = await fetch("http://192.168.29.112:8000/predict", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const result = await response.json();
-    console.log("📥 Response:", result);
-
-    if (!response.ok) {
-      Alert.alert("Backend Error", JSON.stringify(result, null, 2));
-      return;
-    }
-
-    setResultData(result);
-    setShowResult(true);
-
-  } catch (error) {
-    console.log("❌ ERROR:", error);
-    Alert.alert("Network Error", "Cannot reach Python backend.");
-  }
-};
-
+  };
 
   // ⭐ Which screen to show?
   const renderScreen = () => {
+    // 🔥 Chat AI Page
+    if (showChat) {
+      return (
+        <AskPrismChat
+          payload={chatPayload}
+          onBack={() => setShowChat(false)}
+        />
+      );
+    }
+
+    // 🔥 Result Screen
     if (showResult) {
       return (
         <LoanResultScreen
           result={resultData}
           onBack={() => {
             setShowResult(false);
-            onFlowComplete();   // go back to history/home
+            onFlowComplete();
+          }}
+          onAskAI={(result) => {
+            setChatPayload({
+  decision: result.decision,
+  probability: result.probability,
+  explanation: result.explanation
+});
+
+            setShowChat(true);
           }}
         />
       );
     }
 
+    // 🔥 Steps 1 → 4
     switch (currentStep) {
       case 1:
         return (
