@@ -3,15 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import CustomDropdown from './CustomDropdown'; // Import the new component
+import CustomDropdown from './CustomDropdown';
 
 const InputField = ({ label, placeholder, value, onChangeText, keyboardType = 'default', editable = true }) => (
   <View style={styles.inputContainer}>
     <Text style={styles.inputLabel}>{label}</Text>
-    <TextInput 
-      style={styles.input} 
-      placeholder={placeholder} 
-      placeholderTextColor="#AAAAAA" 
+    <TextInput
+      style={styles.input}
+      placeholder={placeholder}
+      placeholderTextColor="#AAAAAA"
       value={value}
       onChangeText={onChangeText}
       keyboardType={keyboardType}
@@ -22,43 +22,58 @@ const InputField = ({ label, placeholder, value, onChangeText, keyboardType = 'd
 
 // Function to calculate age from DOB (DD-MM-YYYY)
 const calculateAge = (dobString) => {
-    if (!dobString || dobString.length !== 10) return '';
-    const parts = dobString.split('-');
-    if (parts.length !== 3) return '';
-    
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10);
-    const year = parseInt(parts[2], 10);
+  if (!dobString || dobString.length !== 10) return '';
+  const parts = dobString.split('-');
+  if (parts.length !== 3) return '';
 
-    const birthDate = new Date(year, month - 1, day);
-    const today = new Date();
-    
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    return isNaN(age) || age < 0 ? '' : age.toString();
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  const year = parseInt(parts[2], 10);
+
+  const birthDate = new Date(year, month - 1, day);
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return isNaN(age) || age < 0 ? '' : age.toString();
 };
 
-
-export function ProfileScreen({ onNext, step }) {
-  const [dob, setDob] = useState(''); // State for Date of Birth
+export function ProfileScreen({ onNext, step, updateFormData }) {
+  // ⭐ Local state for all fields
+  const [fullName, setFullName] = useState('');
+  const [dob, setDob] = useState('');
   const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
   const [maritalStatus, setMaritalStatus] = useState(null);
-  
-  // Update age whenever DOB changes
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+
+  // Update age when DOB changes
   useEffect(() => {
     setAge(calculateAge(dob));
   }, [dob]);
-  
+
   const maritalStatusOptions = [
     { label: 'Single', value: 'single' },
     { label: 'Married', value: 'married' },
     { label: 'Divorced', value: 'divorced' },
     { label: 'Widowed', value: 'widowed' },
   ];
+
+  // ⭐ When NEXT is pressed
+const handleNext = () => {
+  updateFormData({
+    age: age
+  });
+
+  onNext();
+};
+
 
   return (
     <LinearGradient colors={['#3d10c3ff', '#818cf8']} style={styles.gradientBackground}>
@@ -67,27 +82,39 @@ export function ProfileScreen({ onNext, step }) {
           <Text style={styles.headerText}>Loan Application Form</Text>
           <Text style={styles.subheaderText}>Step {step} of 4: Basic Profile Information</Text>
         </View>
+
         <View style={styles.card}>
           <Text style={styles.cardHeader}>👤 Basic Profile Information</Text>
-          <InputField label="Full Name" placeholder="Deepika Aravindhan" />
-          
-          <InputField 
-            label="Date of Birth (DD-MM-YYYY)" 
-            placeholder="22-02-2001" 
+
+          <InputField
+            label="Full Name"
+            placeholder="Deepika Aravindhan"
+            value={fullName}
+            onChangeText={setFullName}
+          />
+
+          <InputField
+            label="Date of Birth (DD-MM-YYYY)"
+            placeholder="22-02-2001"
             value={dob}
             onChangeText={setDob}
             keyboardType="numbers-and-punctuation"
           />
-          
-          <InputField 
-            label="Age (Auto-calculated)" 
+
+          <InputField
+            label="Age (Auto-calculated)"
             placeholder="Age"
             value={age}
             editable={false}
           />
-          
-          <InputField label="Gender" placeholder="Female" />
-          
+
+          <InputField
+            label="Gender"
+            placeholder="Female"
+            value={gender}
+            onChangeText={setGender}
+          />
+
           <CustomDropdown
             label="Marital Status"
             placeholder="Select Marital Status"
@@ -96,10 +123,30 @@ export function ProfileScreen({ onNext, step }) {
             items={maritalStatusOptions}
           />
 
-          <InputField label="Registered Address" placeholder="1st street, Sembulakulam Nagar" />
-          <InputField label="Phone Number" placeholder="8688140558" keyboardType="phone-pad" />
-          <InputField label="Email ID" placeholder="deepikaaravindhan22@gmail.com" keyboardType="email-address" />
-          <TouchableOpacity style={styles.nextButton} onPress={onNext}>
+          <InputField
+            label="Registered Address"
+            placeholder="1st street, Sembulakulam Nagar"
+            value={address}
+            onChangeText={setAddress}
+          />
+
+          <InputField
+            label="Phone Number"
+            placeholder="8688140558"
+            value={phone}
+            onChangeText={setPhone}
+            keyboardType="phone-pad"
+          />
+
+          <InputField
+            label="Email ID"
+            placeholder="deepikaaravindhan22@gmail.com"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+
+          <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
             <Text style={styles.nextButtonText}>Next</Text>
           </TouchableOpacity>
         </View>

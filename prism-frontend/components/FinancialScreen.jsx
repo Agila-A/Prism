@@ -3,22 +3,48 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import CustomDropdown from './CustomDropdown'; // Import the new component
+import CustomDropdown from './CustomDropdown';
 
-const InputField = ({ label, placeholder, keyboardType = 'default' }) => (
+const InputField = ({ label, placeholder, value, onChangeText, keyboardType = 'default' }) => (
   <View style={styles.inputContainer}>
     <Text style={styles.inputLabel}>{label}</Text>
-    <TextInput style={styles.input} placeholder={placeholder} placeholderTextColor="#AAAAAA" keyboardType={keyboardType} />
+    <TextInput
+      style={styles.input}
+      placeholder={placeholder}
+      placeholderTextColor="#AAAAAA"
+      keyboardType={keyboardType}
+      value={value}
+      onChangeText={onChangeText}
+    />
   </View>
 );
 
-export function FinancialScreen({ onNext, onBack, step }) {
-    const [defaultHistory, setDefaultHistory] = useState(null);
+export function FinancialScreen({ onNext, onBack, step, updateFormData }) {
+  // ⭐ all fields with state
+  const [monthlySalary, setMonthlySalary] = useState('');
+  const [creditScore, setCreditScore] = useState('');
+  const [employmentDuration, setEmploymentDuration] = useState('');
+  const [existingEmi, setExistingEmi] = useState('');
+  const [bankBalance, setBankBalance] = useState('');
+  const [missedPayments, setMissedPayments] = useState('');
+  const [defaultHistory, setDefaultHistory] = useState(null);
 
-    const defaultHistoryOptions = [
-        { label: 'Yes', value: 'yes' },
-        { label: 'No', value: 'no' },
-    ];
+  const defaultHistoryOptions = [
+    { label: 'Yes', value: 'yes' },
+    { label: 'No', value: 'no' },
+  ];
+
+  // ⭐ when NEXT is pressed
+  const handleNext = () => {
+  updateFormData({
+    salary: monthlySalary,
+    credit_score: creditScore,
+    existing_emi: existingEmi,
+    default_history: defaultHistory,
+  });
+
+  onNext();
+};
 
   return (
     <LinearGradient colors={['#3d10c3ff', '#818cf8']} style={styles.gradientBackground}>
@@ -27,16 +53,58 @@ export function FinancialScreen({ onNext, onBack, step }) {
           <Text style={styles.headerText}>Loan Application Form</Text>
           <Text style={styles.subheaderText}>Step {step} of 4: Financial Information</Text>
         </View>
+
         <View style={styles.card}>
           <Text style={styles.cardHeader}>💰 Financial Information</Text>
-          
-          <InputField label="Monthly Salary (₹)" placeholder="45000" keyboardType="numeric" />
-          <InputField label="Credit Score" placeholder="770" keyboardType="numeric" />
-          <InputField label="Employment Duration (Months)" placeholder="12" keyboardType="numeric" />
-          <InputField label="Existing EMI (₹/month)" placeholder="-1" keyboardType="numeric" />
-          <InputField label="Bank Balance (₹)" placeholder="800" keyboardType="numeric" />
-          <InputField label="Missed Payments (Last 12 months)" placeholder="0" keyboardType="numeric" />
-          
+
+          <InputField 
+            label="Monthly Salary (₹)" 
+            placeholder="45000" 
+            keyboardType="numeric"
+            value={monthlySalary}
+            onChangeText={setMonthlySalary}
+          />
+
+          <InputField 
+            label="Credit Score" 
+            placeholder="770" 
+            keyboardType="numeric"
+            value={creditScore}
+            onChangeText={setCreditScore}
+          />
+
+          <InputField 
+            label="Employment Duration (Months)" 
+            placeholder="12" 
+            keyboardType="numeric"
+            value={employmentDuration}
+            onChangeText={setEmploymentDuration}
+          />
+
+          <InputField 
+            label="Existing EMI (₹/month)" 
+            placeholder="-1"
+            keyboardType="numeric"
+            value={existingEmi}
+            onChangeText={setExistingEmi}
+          />
+
+          <InputField 
+            label="Bank Balance (₹)" 
+            placeholder="800" 
+            keyboardType="numeric"
+            value={bankBalance}
+            onChangeText={setBankBalance}
+          />
+
+          <InputField 
+            label="Missed Payments (Last 12 months)" 
+            placeholder="0" 
+            keyboardType="numeric"
+            value={missedPayments}
+            onChangeText={setMissedPayments}
+          />
+
           <CustomDropdown
             label="Default History"
             placeholder="Select Default History Status"
@@ -45,12 +113,14 @@ export function FinancialScreen({ onNext, onBack, step }) {
             items={defaultHistoryOptions}
           />
 
-          <TouchableOpacity style={styles.nextButton} onPress={onNext}>
+          <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
             <Text style={styles.nextButtonText}>Next</Text>
           </TouchableOpacity>
+
           <TouchableOpacity onPress={onBack} style={styles.backButton}>
             <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
+
         </View>
       </ScrollView>
     </LinearGradient>
