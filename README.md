@@ -64,15 +64,7 @@ html
   <li>🟢 Node.js + Express — secure backend</li>
   <li>🐘 PostgreSQL — bank-grade data storage</li>
 </ul>
-
 <hr/>
-
-<hr/>
-
-
-
-<hr/>
-
 
 
 <h2>🖼 Screenshots</h2>
