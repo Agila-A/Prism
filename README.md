@@ -82,8 +82,11 @@ html
 
 <h2>📫 Contact</h2>
 <p>Team Prism<br/>
-📧 your-email@example.com<br/>
-🌐 your-website.com</p>
+  📧 230213.it@rmkec.ac.in<br/>
+  📧 deepikaanandhan2@gmail.com<br/>
+  📧 a.agila2005@gmail.com<br/>
+  📧 dhaneshprabhupro@gmail.com<br/>
+
 
 
 
