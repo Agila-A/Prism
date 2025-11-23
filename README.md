@@ -1,4 +1,4 @@
-html
+
 <h1 align="center">🔮 Prism</h1>
 <h3 align="center">The AI Assistant That Finally Explains Itself — Transparent, Bias-Free, Ethical Banking</h3>
 
