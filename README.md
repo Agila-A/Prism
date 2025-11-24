@@ -20,11 +20,10 @@
 
 ## 🎯 **The Problem**
 
-<p align="center">
-  <img src="https://svg-banners.vercel.app/api?type=typewriter&text1=Love%20or%20Loan%20❤️&width=800&height=120" />
-  <br/>
-  <i style="font-size:18px;">Getting rejected without an explanation hurts the most.</i>
-</p>
+<h2 align="center" style="font-weight:800; font-size:30px;">
+  Love or Loan — Getting rejected without an explanation hurts the most.
+</h2>
+
 
 
 Nowadays Banking AI makes life-changing decisions—loan approvals, credit limits, account access—but **never explains why**. Millions face:
