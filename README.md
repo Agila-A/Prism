@@ -134,7 +134,7 @@ Banking AI makes life-changing decisions—loan approvals, credit limits, accoun
 
 ```mermaid
 graph TB
-    A[🎤 User Voice Input] --> B[Whisper AI<br/>99+ Languages]
+    A[🎤 User Voice Input] --> B[Whisper AI<br/>5+ Languages]
     B --> C[Node.js API Gateway<br/>JWT + RBAC]
     C --> D[XGBoost + SHAP<br/>ML Engine]
     C --> E[Groq LLM<br/>Chatbot]
