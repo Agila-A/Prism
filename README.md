@@ -7,7 +7,6 @@
 
 <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=3000&pause=1000&color=6366F1&center=true&vCenter=true&width=800&lines=Your+banking.+Your+language.+Your+control.;Voice-First+%7C+Explainable+%7C+Bias-Free;99%2B+Languages+%7C+Real-Time+Transparency;When+AI+decides+your+future%2C+shouldn't+it+explain+why%3F" alt="Typing SVG" />
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![React Native](https://img.shields.io/badge/React_Native-20232A?logo=react&logoColor=61DAFB)](https://reactnative.dev/)
 [![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?logo=postgresql&logoColor=white)](https://postgresql.org/)
@@ -317,7 +316,7 @@ Addressing: AI Transparency • Explainability • Customer Control • Responsi
 
 ---
 
-### **⭐ Star this repo if you believe in fair, transparent AI for everyone**
+### **Be on TOP with PRISM **
 
 *"Banking transparency, finally."*
 
