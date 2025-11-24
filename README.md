@@ -322,7 +322,7 @@ Addressing: AI Transparency • Explainability • Customer Control • Responsi
 
 ---
 
-### **Be on TOP with PRISM **
+###**Be on TOP with PRISM **
 
 *"Banking transparency, finally."*
 
